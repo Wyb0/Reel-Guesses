@@ -99,6 +99,42 @@ $(document).ready(function() {
         "Night at the Museum",
         "Star Wars: Episode II – Attack of the Clones",
         "Star Wars: Episode III – Revenge of the Sith",
-        "Star Wars: Episode VII – The Force Awakens"]
+        "Star Wars: Episode VII – The Force Awakens"
+        ];
 
-})
+
+
+//need a function to extract the list of main acotrs/actresses from each film through the object path and .push();
+//each name to the array held by the var movieStars
+
+
+//setting the var movieStar to hold the array of actor's/actress's names from the film
+var movieStars = ["Hugo Weaving"]; //"xpathFromOMBDapiRequest";
+//function to generate the ajax request to and utilize the response from (i.e. pull star bio's) Wikipedia's API
+function pullBio() {
+    //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var completing the ajax request
+    var movieStar = $(this).attr('name')
+    //setting the var queryURL to hold the query for Wikipedia's API and the interpolated var movieStar to dynamically create the full API call
+    var queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + movieStar + "&limit=1";
+    //creating a jQuery ajax call for the specific actor/actress with the "GET" method
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+        //setting the .done function to receive the response
+    }).done(function(response){
+    console.log(response);
+    //creating a var starDiv to hold the dynamically created html div w/ class="star"
+    var starDiv = $('<div class="star">');
+    //setting the var starBio to the path for the star's biography, ultimately setting starBio to hold the star's biography
+    var starBio = response[2]["0"];
+        //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
+        var bioP = $('<p>').text('Star Biography: ' + starBio);
+        starDiv.append(bioP);
+
+
+    $('#movieStar').append(starDiv);
+});
+};
+pullBio();
+
+});
