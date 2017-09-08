@@ -112,8 +112,8 @@ $(document).ready(function() {
 var movieStars = ["Hugo Weaving"]; //"xpathFromOMBDapiRequest";
 //function to generate the ajax request to and utilize the response from (i.e. pull star bio's) Wikipedia's API
 function pullBio() {
-    //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var completing the ajax request
-    var movieStar = $(this).attr('name')
+    //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var, completing the ajax request
+    var movieStar = "Hugo Weaving";    //$(this).attr('name')
     //setting the var queryURL to hold the query for Wikipedia's API and the interpolated var movieStar to dynamically create the full API call
     var queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + movieStar + "&limit=1";
     //creating a jQuery ajax call for the specific actor/actress with the "GET" method
@@ -129,10 +129,10 @@ function pullBio() {
     var starBio = response[2]["0"];
         //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
         var bioP = $('<p>').text('Star Biography: ' + starBio);
+        //appending the var bioP to the var starDiv
         starDiv.append(bioP);
-
-
-    $('#movieStar').append(starDiv);
+        //append the var starDiv to the html div element with the id="movieStar"
+        $('#movieStar').append(starDiv);
 });
 };
 pullBio();
