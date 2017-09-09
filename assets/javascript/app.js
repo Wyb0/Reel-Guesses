@@ -109,11 +109,11 @@ $(document).ready(function() {
 
 
 //setting the var movieStar to hold the array of actor's/actress's names from the film
-var movieStars = ["Hugo Weaving"]; //"xpathFromOMBDapiRequest";
+var movieStars = ["Hugo Weaving", "Brad Pitt", "Jeremy Rener", "Samuel L. Jackson"]; //"xpathFromOMBDapiRequest";
 //function to generate the ajax request to and utilize the response from (i.e. pull star bio's) Wikipedia's API
 function pullBio() {
     //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var, completing the ajax request
-    var movieStar = "Hugo Weaving";    //$(this).attr('name')
+    var movieStar = $(this).attr('data-name')
     //setting the var queryURL to hold the query for Wikipedia's API and the interpolated var movieStar to dynamically create the full API call
     var queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + movieStar + "&limit=1";
     //creating a jQuery ajax call for the specific actor/actress with the "GET" method
@@ -122,19 +122,47 @@ function pullBio() {
         method: "GET"
         //setting the .done function to receive the response
     }).done(function(response){
-    console.log(response);
-    //creating a var starDiv to hold the dynamically created html div w/ class="star"
-    var starDiv = $('<div class="star">');
-    //setting the var starBio to the path for the star's biography, ultimately setting starBio to hold the star's biography
-    var starBio = response[2]["0"];
+        //creating a var starDiv to hold the dynamically created html div w/ class="star"
+        var starDiv = $('<div class="star">');
+        //setting the var starBio to the path for the star's biography, ultimately setting starBio to hold the star's biography
+        var starBio = response[2][0];
         //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
-        var bioP = $('<p>').text('Star Biography: ' + starBio);
+        var bioP = $('<p>').text("Star Biography: " + starBio);
         //appending the var bioP to the var starDiv
-        starDiv.append(bioP);
+        starDiv.append(starBio);
         //append the var starDiv to the html div element with the id="movieStar"
-        $('#movieStar').append(starDiv);
-});
+        $('#movieStar').prepend(starDiv);
+    });
 };
-pullBio();
+//function to create movieStar buttons
+function makeButtons() {
+    //deletes the #starButtons div each time a new movieStars array is added, preventing repeat/lingering buttons 
+    $('#starButtons').empty();
+    //for loop that loops through the entire array, rendering a button for each index of the array
+    for (var i = 0; i < movieStars.length; i++) {
+        console.log("first", movieStars[i]);
+        //dynamically creating a button through JQuery (with css styling to prevent each button from touching one another)
+        var $btn = $('<button>').css({ "margin": "5px 5px" });
+        console.log("second", $btn);
+        //adding the class="movieStar" to the newly dynamically created buttons
+        $btn.addClass('stars');
+        console.log("third", $btn);
+        //adding the data-name attribute to the buttons
+        $btn.attr('data-name', movieStars[i]);
+        console.log("forth", $btn);
+        //gives each button a text lable matching the text of the element in the array
+        $btn.text(movieStars[i]);
+        console.log('fifth', $btn);
+        //locates each button in the div with the id="Star-view"
+        $('#starButtons').append($btn);
+        console.log("sixth", $btn);
+    }
+};
+//using the document on click event listener to pull the giphs onto the page when a giph button is clicked
+$(document).on('click', '.stars', pullBio);
+
+makeButtons();
+
+
 
 });
