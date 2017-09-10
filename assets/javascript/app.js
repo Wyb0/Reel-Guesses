@@ -102,23 +102,21 @@ $(document).ready(function() {
         "Star Wars: Episode VII – The Force Awakens"
         ];
 
-
-
 //need a function to extract the list of main acotrs/actresses from each film through the object path and .push();
 //each name to the array held by the var movieStars
 
 
 //setting the var movieStar to hold the array of actor's/actress's names from the film
-var movieStars = ["Hugo Weaving", "Brad Pitt", "Jeremy Rener", "Samuel L. Jackson"]; //"xpathFromOMBDapiRequest";
+/*var movieStars = ["Hugo Weaving", "Brad Pitt", "Jeremy Rener", "Samuel L. Jackson"]; //"xpathFromOMDBapiRequest";
 //function to generate the ajax request to and utilize the response from (i.e. pull star bio's) Wikipedia's API
 function pullBio() {
     //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var, completing the ajax request
     var movieStar = $(this).attr('data-name')
     //setting the var queryURL to hold the query for Wikipedia's API and the interpolated var movieStar to dynamically create the full API call
-    var queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + movieStar + "&limit=1";
+    var queryURL2 = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + movieStar + "&limit=1";
     //creating a jQuery ajax call for the specific actor/actress with the "GET" method
     $.ajax({
-        url: queryURL,
+        url: queryURL2,
         method: "GET"
         //setting the .done function to receive the response
     }).done(function(response){
@@ -127,7 +125,7 @@ function pullBio() {
         //setting the var starBio to the path for the star's biography, ultimately setting starBio to hold the star's biography
         var starBio = response[2][0];
         //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
-        var bioP = $('<p>').text("Star Biography: " + starBio);
+        var bioP = $('<p>').text(starBio);
         //appending the var bioP to the var starDiv
         starDiv.append(starBio);
         //append the var starDiv to the html div element with the id="movieStar"
@@ -138,7 +136,7 @@ function pullBio() {
 function makeButtons() {
     //deletes the #starButtons div each time a new movieStars array is added, preventing repeat/lingering buttons 
     $('#starButtons').empty();
-    //for loop that loops through the entire array, rendering a button for each index of the array
+    //for loop that itterates through the entire array, rendering a button for each index of the array
     for (var i = 0; i < movieStars.length; i++) {
         console.log("first", movieStars[i]);
         //dynamically creating a button through JQuery (with css styling to prevent each button from touching one another)
@@ -158,11 +156,47 @@ function makeButtons() {
         console.log("sixth", $btn);
     }
 };
-//using the document on click event listener to pull the giphs onto the page when a giph button is clicked
+//using the document on click event listener to display the star bio on the page when a star button is clicked
 $(document).on('click', '.stars', pullBio);
 
-makeButtons();
+makeButtons();*/
 
+
+
+
+//creating the var films to hold the array of items/films pushed from the omdb api
+var films = ["Pulp Fiction", "Clueless", "Fight Club", "The Matrix", "Titanic"];
+//setting the var $dvdBrDiv to hold the dynamically created div with class="disc" and font-size .8rem
+var $dvdBrDiv = $('<div>').addClass("disc").css({"font-size": "0.8rem"});
+//for loop that instantaneously itterates several ajax requests for each item in the array held by the var films
+for (var j = 0; j < films.length; j++) {
+    //created the var queryURL3 to hold the url for the ajax request which waits for each item in the var films to concatenate by way of the for loop and complete the url and consequently the ajax request 
+    var queryURL3 = "https://api.walmartlabs.com/v1/search?apikey=bazr3m8sdwbcyg57sjkm8ake&numItems=1&responseGroup=full&query=" + films[j];
+    //the ajax request with url and method "GET" that is being looped through for each item in the array held by the var films
+    $.ajax({
+        url: queryURL3,
+        method: "GET"
+    //the .done function that is being looped through for each array intem held by the var films
+    }).done(function(response){
+        console.log(response);
+        //setting the var caseArt to hold the path to the dvd/blue-ray image
+        var caseArt = response.items[0].imageEntities[1].thumbnailImage;
+        //setting the var $caseImage to hold the dynamically created html image element with the src attribute set to the var caseArt
+            var $caseImage = $('<br><img>').attr("src", caseArt);
+            //appending the var $caseImage to the var $dvdBrDiv which holds the dynamically created div, essentially putting a dynamically created html image into a dynamically created html div
+            $dvdBrDiv.append($caseImage);
+        var name = response.items[0].name;
+            var $title = $('<p>').text(name);
+            $dvdBrDiv.append($title);
+        var cost = response.items[0].salePrice;
+            var $price = $('<p>').text("Walmart price $" + cost);
+            $dvdBrDiv.append($price);
+        var addtoCart = response.items[0].addToCartUrl;
+            var $cart = $('<a>').attr("href", addtoCart).text("Add To Cart");
+            $dvdBrDiv.append($cart);
+        $('#movieStar').prepend($dvdBrDiv);
+    });
+};
 
 
 });
