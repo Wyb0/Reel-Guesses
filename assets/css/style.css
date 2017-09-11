@@ -6,3 +6,26 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.container {
+    /*width: 1200px;
+    /*padding: 50px;*/
+    /*box-sizing: border-box;*/
+    box-shadow: 0 10px 10px 10px #000;
+    /*-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    /* border-radius: 5px;*/
+    text-align: center;
+    border: 1px solid black;
+    /* margin-top: 4px; */
+    background: url("background.jpg");
+}
+
+h1 {
+    margin: 0 0 0px;
+    padding: 20px 0px;
+    color: white;
+    background-color: maroon;
+    border-bottom: solid -10px #ddd;
+    text-align: center;
+}
