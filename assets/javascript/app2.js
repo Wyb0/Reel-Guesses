@@ -5,7 +5,7 @@ $(document).ready(function(){
 //////////////////////the function would go here -- below is the star biography code area////////////////////////////////////
 
 //setting the var movieStar to hold the array of actor's/actress's names from the film
-var movieStars = ["Hugo Weaving", "Brad Pitt", "Jeremy Rener", "Samuel L. Jackson"];  //this array is set up as a test 
+var movieStars = ["Hugo Weaving", "Brad Pitt", "Jeremy Rener", "Samuel L. Jackson", "Leonardo Dicaprio"];  //this array is set up as a test 
 //function to generate the ajax request to and utilize the response from (i.e. pull star bio's) Wikipedia's API
 function pullBio() {
     //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var, completing the ajax request
@@ -23,9 +23,9 @@ function pullBio() {
         //setting the var starBio to the path for the star's biography, ultimately setting starBio to hold the star's biography
         var starBio = response[2][0];
         //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
-        var bioP = $('<p>').text(starBio);
+        var bioP = $('<p>').text("Star Biography: " + starBio);
         //appending the var bioP to the var starDiv
-        starDiv.append(starBio);
+        starDiv.append(bioP);
         //append the var starDiv to the html div element with the id="movieStar"
         $('#movieStar').prepend(starDiv);
     });
@@ -58,9 +58,9 @@ function makeButtons() {
 $(document).on('click', '.stars', pullBio);
 
 makeButtons();
-/////////////////////////// end of star biography code/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////// end of star biography code///////////////////////////////////////////////////////////////////////////
 
-//////need a function to .push(); the array of 5 films from each round to the var films array below --- this is the shopping area code//////
+///need a function to .push(); the array of 5 films from each round to the var films array below -- this is the shopping area code///
 
 
 //creating the var films to hold the array of items/films pushed from the omdb api
@@ -99,7 +99,7 @@ for (var j = 0; j < films.length; j++) {
         //setting the var addtoCart to hold the path to the walmart shopping cart checkout/purchase screen for each dvd/blue-ray 
         var addtoCart = response.items[0].addToCartUrl;
         //created the var $cart to hold a dynamically created html anchor element with the href attribute hyper linking the dvd/blue-ray, the app, and walmart's shopping cart checkout/purchase screen
-        var $cart = $('<a>').attr("href", addtoCart).text("Add To Cart");
+        var $cart = $('<a>').attr("href", addtoCart).attr("target", "_blank").text("Add To Cart");
         //appending the var $cart with the dynamically created html anchor element to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html anchor element into a dynamically created html div element
         $dvdBrDiv.append($cart);
         //prepending the var $dvdBrDiv to the div with the id="filmCase"
@@ -107,4 +107,4 @@ for (var j = 0; j < films.length; j++) {
     });
 };
 });
-/////////////////////////// end of shopping code area //////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////// end of shopping code area//////////////////////////////////////////////////////////////////////////////
