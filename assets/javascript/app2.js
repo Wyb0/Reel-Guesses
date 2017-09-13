@@ -70,7 +70,7 @@ var $dvdBrDiv = $('<div>').addClass("disc").css({ "font-size": "0.8rem" });
 //for loop that instantaneously itterates several ajax requests, one for each index in the array held by the var films
 for (var j = 0; j < films.length; j++) {
     //created the var queryURL3 to hold the url for the ajax request which waits for each item in the var films to concatenate by way of the for loop and complete the url and consequently the ajax request 
-    var queryURL3 = "https://api.walmartlabs.com/v1/search?apikey=bazr3m8sdwbcyg57sjkm8ake&numItems=1&responseGroup=full&query=" + films[j];
+    var queryURL3 = "https://api.walmartlabs.com/v1/search?apikey=bazr3m8sdwbcyg57sjkm8ake&categoryId=4096&numItems=1&responseGroup=full&query=" + films[j];
     //the ajax request with url and method "GET" that is being looped through for each item in the array held by the var films
     $.ajax({
         url: queryURL3,
@@ -79,7 +79,7 @@ for (var j = 0; j < films.length; j++) {
     }).done(function (response) {
         console.log(response);
         //setting the var caseArt to hold the path to each dvd/blue-ray image
-        var caseArt = response.items[0].imageEntities[1].thumbnailImage;
+        var caseArt = response.items[0].thumbnailImage;
         //setting the var $caseImage to hold the dynamically created html image element with the src attribute set to the var caseArt
         var $caseImage = $('<br><img>').attr("src", caseArt);
         //appending the var $caseImage to the var $dvdBrDiv which holds the dynamically created div, ultimately putting a dynamically created html image into a dynamically created html div
