@@ -1,4 +1,91 @@
-$(document).ready(function(){
+$(document).ready( () => {
+
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyAC81YemgvKLvGMDq1pUo-e7OS8LmbPOT8",
+    authDomain: "reel-guesses.firebaseapp.com",
+    databaseURL: "https://reel-guesses.firebaseio.com",
+    projectId: "reel-guesses",
+    storageBucket: "reel-guesses.appspot.com",
+    messagingSenderId: "27036367195"
+};
+
+//initializing firebase
+firebase.initializeApp(config)
+
+//setting the var database as a reference to firebase.database(); 
+var database = firebase.database();
+
+//setting the var connectionsRef to the path for /connections, all the connections data will be stored in this dir
+var connectionsRef = database.ref('/connections');
+
+//creating the var connectedRef to reference the .info/connected path that updates with each connection state change
+var connectedRef = database.ref('.info/connected');
+
+//setting the .on('value') event listener to the reference for .info/connected so snap updates with each update in the connection state
+connectedRef.on('value', snap => {
+    
+//if the client is connected, .info/connected registers a state change that is heard by .on(value) which updates snap's.val()
+//and snap.val() is thus true
+if(snap.val()) {
+
+    //when true or when client is connected, add user to /connections list
+    var ucon = connectionsRef.push(true);
+
+    //onDisconnect() take user off /conections list
+    ucon.onDisconnect().remove();
+
+    }
+});
+//on load up and w/ each state change in the /connections list grab a data snap
+connectionsRef.on('value', snap => {
+
+    //display the data snap in the app html -- numChildren is the number of players in /connections
+    $('#playerPop').html(snap.numChildren());
+});
+
+//initializing click counter for the starBio buttons, we want to see if it's a popular/liked feature
+var starClicker = 0;
+
+//when a user clicks a button with class stars
+$(document).on('click', 'button.stars', () => {
+
+    //increase the starClicker
+    starClicker++;
+
+    //save the new value to firebase in JSON property "starClicked" 
+    database.ref('/starClicks').set({
+        starClicked: starClicker
+    });
+
+    //logging the value of starClicker
+    console.log(starClicker);
+});
+
+//on load up & w/ each state/value change at /starClicks get a data snapshot
+database.ref('/starClicks').on('value', snapshot => {
+    
+    //log the local value of the snapshot to the console
+    console.log(snapshot.val());
+
+    //changing the var starClicker to reflect the local value in firebase
+    starClicker = snapshot.val().starClicked;
+
+    //logging the value of starClicker to test code above
+    console.log(starClicker);
+
+    //logging the local value from firebase to test above code & get the number of /starClicks
+    console.log(snapshot.val().starClicked);
+
+    //error logging function that...
+    }, errorObject => {
+        
+        //logs errors to the console
+        console.log('The read failed: ', errorObject.code);
+});
+
+
+
 //need a function to extract the list of main acotrs/actresses from each film through the object path of the omdb api and .push();
 //each name to the array held by the var movieStars below
 
@@ -17,17 +104,17 @@ function pullBio() {
         url: queryURL2,
         method: "GET"
         //setting the .done function to receive the response
-    }).done(function (response) {
+    }).done( repo => {
         //creating a var starDiv to hold the dynamically created html div w/ class="star"
         var starDiv = $('<div class="star">');
         //setting the var starBio to the path for the star's biography, ultimately setting starBio to hold the star's biography
-        var starBio = response[2][0];
+        var starBio = repo[2][0];
         //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
         var bioP = $('<p>').text("Star Biography: " + starBio);
         //appending the var bioP to the var starDiv
         starDiv.append(bioP);
         //append the var starDiv to the html div element with the id="movieStar"
-        $('#movieStar').prepend(starDiv);
+        $('#starButtons').append(starDiv);
     });
 };
 //function to create movieStar buttons
@@ -50,7 +137,7 @@ function makeButtons() {
         $btn.text(movieStars[i]);
         console.log('fifth', $btn);
         //locates each button in the div with the id="starButtons"
-        $('#starButtons').append($btn);
+        $('#starButtons').prepend($btn);
         console.log("sixth", $btn);
     }
 };
@@ -76,28 +163,28 @@ for (var j = 0; j < films.length; j++) {
         url: queryURL3,
         method: "GET"
         //the .done function that is being looped through for each array intem held by the var films
-    }).done(function (response) {
-        console.log(response);
+    }).done( repo => {
+        console.log(repo);
         //setting the var caseArt to hold the path to each dvd/blue-ray image
-        var caseArt = response.items[0].thumbnailImage;
+        var caseArt = repo.items[0].imageEntities[1].thumbnailImage;
         //setting the var $caseImage to hold the dynamically created html image element with the src attribute set to the var caseArt
         var $caseImage = $('<br><img>').attr("src", caseArt);
         //appending the var $caseImage to the var $dvdBrDiv which holds the dynamically created div, ultimately putting a dynamically created html image into a dynamically created html div
         $dvdBrDiv.append($caseImage);
         //setting the var name to hold the path to each dvd/blue-ray title
-        var name = response.items[0].name;
+        var name = repo.items[0].name;
         //creating the var $title to hold a dynamically created html paragraph element with text of each dvd/blue-ray title
         var $title = $('<p>').text(name);
         //appending the var $title to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html paragraph into a dynamically created html div
         $dvdBrDiv.append($title);
         //setting the var cost to hold the path to each dvd/blue-ray price
-        var cost = response.items[0].salePrice;
+        var cost = repo.items[0].salePrice;
         //created the var $price to hold a dynamically created html paragraph element with text of each dvd/blue-ray price
         var $price = $('<p>').text("Walmart price $" + cost);
         //appending the var $price to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html element into another dynamically created html div element
         $dvdBrDiv.append($price);
         //setting the var addtoCart to hold the path to the walmart shopping cart checkout/purchase screen for each dvd/blue-ray 
-        var addtoCart = response.items[0].addToCartUrl;
+        var addtoCart = repo.items[0].addToCartUrl;
         //created the var $cart to hold a dynamically created html anchor element with the href attribute hyper linking the dvd/blue-ray, the app, and walmart's shopping cart checkout/purchase screen
         var $cart = $('<a>').attr("href", addtoCart).attr("target", "_blank").text("Add To Cart");
         //appending the var $cart with the dynamically created html anchor element to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html anchor element into a dynamically created html div element
