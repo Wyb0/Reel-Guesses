@@ -186,16 +186,16 @@ var movies = ["Bill and Ted’s Excellent Adventure",
         "Star Wars: Episode VII – The Force Awakens"
         ];
 
-//setting the var chosen to grab a randomly selected movie from the array of movies
-var grab = movies[Math.floor(Math.random() * movies.length)];
-//logging chosen to test we're getting proper results
-console.log(grab);
+//setting the var film to grab a randomly selected movie from the array of movies
+var film = movies[Math.floor(Math.random() * movies.length)];
+//logging film to test we're getting proper results
+console.log(film);
 //setting the var movieStars to an empty array, which will hold the list of actors from the randomly selected film
 var movieStars = [];
-//function to generate the ajax request and utilize the response from (i.e. pull movies) OMDB API
-function pullMovie() {
-    //setting the var queryURL to hold the query for OMDB's API and the interpolated var grab to dynamically create the full API call 
-    var queryURL = "https://www.omdbapi.com/?t=" + grab + "&y=&plot=short&apikey=be1e25b8";
+//function to generate the ajax request and utilize the response (i.e. pull movies) pull the film OMDB API
+function pullFilm() {
+    //setting the var queryURL to hold the query for OMDB's API and the interpolated var film to dynamically create the full API call 
+    var queryURL = "https://www.omdbapi.com/?t=" + film + "&y=&plot=short&apikey=be1e25b8";
     //
     $.ajax({
         url: queryURL,
@@ -207,6 +207,7 @@ function pullMovie() {
         database.ref('/filmStars').set({
             stars: actors
         });
+        
         /*movieStars.push((repo.Actors.split(',')));
         console.log(movieStars);
         function makeButtons() {
@@ -239,13 +240,13 @@ function pullMovie() {
     //makeButtons();
 }
 
-pullMovie();
-//need a function to extract the list of main acotrs/actresses from each film through the object path of the omdb api and .push();
-//each name to the array held by the var movieStars below
+pullFilm();
 
 ////////////////////// below is the star biography code area//////////////////////////////////////////////////////////////////////
 
-database.ref('/filmStars').on('value', function(snap) {
+//used  a database function to extract the list of main actors/actresses from each film through the object path of the omdb api and .push();
+//each name to the array held by the var movieStars below
+database.ref('/filmStars').on('value', snap => {
 
     console.log(snap.val());
 
@@ -379,22 +380,19 @@ database.ref('/starClicks').on('value', snapshot => {
     console.log('The read failed: ', errorObject.code);
 });
 
-
-
-
 /////////////////////////// end of star biography code///////////////////////////////////////////////////////////////////////////
 
-///need a function to .push(); the array of 5 films from each round to the var films array below -- this is the shopping area code///
+///used a database function to .push(); the film from each round to the var films var below -- this is the shopping area code////
 
+//creating the var film to hold the film info of items/films pushed from the omdb api
 
-//creating the var films to hold the array of items/films pushed from the omdb api
-var films = ["Pulp Fiction", "Clueless", "Fight Club", "The Matrix", "Titanic"];
+//var films = ["Pulp Fiction", "Clueless", "Fight Club", "The Matrix", "Titanic"];
 //setting the var $dvdBrDiv to hold the dynamically created div with class="disc" and font-size .8rem
-var $dvdBrDiv = $('<div>').addClass("disc").css({ "font-size": "0.8rem" });
+var $dvdBrDiv = $('<div>').addClass("disc").css({ "font-size": "0.9rem" });
 //for loop that instantaneously itterates several ajax requests, one for each index in the array held by the var films
-for (var j = 0; j < films.length; j++) {
+//for (var j = 0; j < films.length; j++) {
     //created the var queryURL3 to hold the url for the ajax request which waits for each item in the var films to concatenate by way of the for loop and complete the url and consequently the ajax request 
-    var queryURL3 = "https://api.walmartlabs.com/v1/search?apikey=bazr3m8sdwbcyg57sjkm8ake&categoryId=4096&numItems=1&responseGroup=full&query=" + films[j];
+    var queryURL3 = "https://api.walmartlabs.com/v1/search?apikey=bazr3m8sdwbcyg57sjkm8ake&categoryId=4096&numItems=1&responseGroup=full&query=" + film;//films[j];
     //the ajax request with url and method "GET" that is being looped through for each item in the array held by the var films
     $.ajax({
         url: queryURL3,
@@ -403,7 +401,7 @@ for (var j = 0; j < films.length; j++) {
     }).done( repo3 => {
         console.log(repo3);
         //setting the var caseArt to hold the path to each dvd/blue-ray image
-        var caseArt = repo3.items[0].imageEntities[1].thumbnailImage;
+        var caseArt = repo3.items[0].imageEntities[0].largeImage;
         //setting the var $caseImage to hold the dynamically created html image element with the src attribute set to the var caseArt
         var $caseImage = $('<br><img>').attr("src", caseArt);
         //appending the var $caseImage to the var $dvdBrDiv which holds the dynamically created div, ultimately putting a dynamically created html image into a dynamically created html div
@@ -429,6 +427,6 @@ for (var j = 0; j < films.length; j++) {
         //prepending the var $dvdBrDiv to the div with the id="filmCase"
         $('#filmCase').prepend($dvdBrDiv);
     });
-};
+//};
 });
 /////////////////////////// end of shopping code area//////////////////////////////////////////////////////////////////////////////
