@@ -203,6 +203,12 @@ function pullFilm() {
         //
     }).done( repo => {
         console.log(repo);
+        var filmDiv = $('<div>').addClass('films');
+        //grabing the url for the poster & sticking it in the var poster
+        var poster = repo.Poster;
+        //dynamically creating an image element to hold the poster and wrapping it in the var image
+        var image = $('<img>').attr('src', poster);
+
         var actors = repo.Actors
         database.ref('/filmStars').set({
             stars: actors
