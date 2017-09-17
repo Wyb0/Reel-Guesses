@@ -168,7 +168,14 @@ function pullFilm() {
         //
     }).done( repo => {
         console.log(repo);
+        //creating the var filmDiv to hold a dynamic div with class .films which in turn holds the randomly selected film
         var filmDiv = $('<div>').addClass('films');
+        //grabbing the ratings from the repo object path with the var rating
+        var rating = repo.Rated;
+        //creating the var rated to hold a dynamic paragraph which contains the ratings 
+        var rated = $('<p>').html('Rated: ' + rating);
+        //appending the rated var to the dynamic div with class .films
+        filmDiv.append(rated);
         //grabing the url for the poster & sticking it in the var poster
         var poster = repo.Poster;
         //dynamically creating an image element to hold the poster and wrapping it in the var image
