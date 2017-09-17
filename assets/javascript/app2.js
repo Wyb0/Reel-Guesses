@@ -211,19 +211,27 @@ function pullFilm() {
         //appending the image to the dynamically created filmDiv
         filmDiv.append(image);
         //grabbing the release date and storing it in the var released
-        var released = repo.released;
+        var released = repo.Released;
         //dynamically creating a paragraph element to hold the release date and sticking it in the var release
         var release = $('<p>').html('Release Date: ' + released + '.');
         //appending the var release (i.e. the html element) to the filmDiv
         filmDiv.append(release);
         //grabbing the list of main actors in the film and storing it in the var actors
-        var actors = repo.Actors
+        var actors = repo.Actors;
         //grabbing a reference path/node from the real time database to store the list of actors in for later use in another function, which would otherwise violate scope and not be possible
         database.ref('/filmStars').set({
             stars: actors
         });
         //dynamically creating a paragraph element to hold the list of actors and wrapping it with the var players
-        var players = $('<p>').html('Starring')
+        var players = $('<p>').html('Starring: ' + actors);
+        //appending the var players (i.e. html element) to the filmDiv
+        filmDiv.append(players);
+        
+        var story = repo.Plot;
+
+        var plot = $('<p>').html('Synopsis: ' + story);
+
+        filmDiv.append(plot);
         /*movieStars.push((repo.Actors.split(',')));
         console.log(movieStars);
         function makeButtons() {
@@ -252,6 +260,7 @@ function pullFilm() {
             }
         };
         makeButtons();*/
+        $('#film-view').prepend(filmDiv);
     })
     //makeButtons();
 }
