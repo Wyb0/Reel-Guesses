@@ -44,45 +44,10 @@ connectionsRef.on('value', snap => {
     $('#playerPop').html(snap.numChildren());
 });
 
-/*//initializing click counter for the starBio buttons, we want to see if it's a popular/liked feature
-var starClicker = 0;
+//////////////////////////////////// end of initial database code ////////////////////////////////////////////////////////////////////////
 
-//when a user clicks a button with class stars
-$(document).on('click', 'button.stars', () => {
+//////// start of film info code ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //increase the starClicker
-    starClicker++;
-
-    //save the new value to firebase in JSON property "starClicked" 
-    database.ref('/starClicks').set({
-        starClicked: starClicker
-    });
-
-    //logging the value of starClicker
-    console.log(starClicker);
-});
-
-//on load up & w/ each state/value change at /starClicks get a data snapshot
-database.ref('/starClicks').on('value', snapshot => {
-    
-    //log the local value of the snapshot to the console
-    console.log(snapshot.val());
-
-    //changing the var starClicker to reflect the local value in firebase
-    starClicker = snapshot.val().starClicked;
-
-    //logging the value of starClicker to test code above
-    console.log(starClicker);
-
-    //logging the local value from firebase to test above code & get the number of /starClicks
-    console.log(snapshot.val().starClicked);
-
-    //error logging function that...
-    }, errorObject => {
-        
-        //logs errors to the console
-        console.log('The read failed: ', errorObject.code);
-});*/
 //setting the var movies to hold the array of 100 films
 var movies = ["Bill and Ted’s Excellent Adventure",
         "White Chicks",
@@ -232,42 +197,16 @@ function pullFilm() {
         var plot = $('<p>').html('Synopsis: ' + story);
 
         filmDiv.append(plot);
-        /*movieStars.push((repo.Actors.split(',')));
-        console.log(movieStars);
-        function makeButtons() {
-            //deletes the #starButtons div each time a new movieStars array is added, preventing repeat/lingering buttons 
-            $('#starButtons').empty();
-            //for loop that itterates through the entire array, rendering a button for each index of the array
-            for (var i = 0; i < movieStars[0].length; i++) {
-                console.log("first", movieStars[0][i]);
-                //for (var k = 0; k < movieStars[i].length; k++) {
-                //dynamically creating a button through JQuery (with css styling to prevent each button from touching one another)
-                var $btn = $('<button>').css({ "margin": "5px 5px" });
-                console.log("second", $btn);
-                //adding the class="stars" to the newly dynamically created buttons
-                $btn.addClass('stars');
-                console.log("third", $btn);
-                //adding the data-name attribute to the buttons
-                $btn.attr('data-name', movieStars[0][i]);
-                console.log("forth", $btn);
-                //gives each button a text lable matching the text of the element in the array
-                $btn.text(movieStars[0][i]);
-                console.log('fifth', $btn);
-                //locates each button in the div with the id="starButtons"
-                $('#starButtons').prepend($btn);
-                console.log("sixth", $btn);
-                //}
-            }
-        };
-        makeButtons();*/
+        
         $('#film-view').prepend(filmDiv);
     })
-    //makeButtons();
 }
 
 pullFilm();
 
-////////////////////// below is the star biography code area//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////// end of film info code area //////////////////////////////////////////////
+
+/////////////////////// start of the star biography code area//////////////////////////////////////////////////////////////////////
 
 //used  a database function to extract the list of main actors/actresses from each film through the object path of the omdb api and .push();
 //each name to the array held by the var movieStars below
@@ -303,16 +242,14 @@ database.ref('/filmStars').on('value', snap => {
             console.log("sixth", $btn);
         }
     };
-
+    //calling the makeButtons() function to generate our star buttons for each film
     makeButtons();
-
+    //error logging function that
 }, errorObject => {
-
+    //logs errors to the console
     console.log('The read failed: ' + errorObject.code);
 });
-//setting the var movieStar to hold the array of actor's/actress's names from the film
-//var movieStars = [theArray.valueOf(actors)];  //this array is set up as a test 
-//function to generate the ajax request and utilize the response from (i.e. pull star bio's) Wikipedia's API
+//function to generate the ajax request and utilize the response from  Wikipedia's API (i.e. pull the star bios)
 function pullBio() {
     //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var, completing the ajax request
     var movieStar = $(this).attr('data-name')
@@ -336,34 +273,10 @@ function pullBio() {
         $('#starButtons').append(starDiv);
     });
 };
-//function to create movieStar buttons
-/*function makeButtons() {
-    //deletes the #starButtons div each time a new movieStars array is added, preventing repeat/lingering buttons 
-    $('#starButtons').empty();
-    //for loop that itterates through the entire array, rendering a button for each index of the array
-    for (var i = 0; i < movieStars.length; i++) {
-        console.log("first", movieStars[i]);
-        //dynamically creating a button through JQuery (with css styling to prevent each button from touching one another)
-        var $btn = $('<button>').css({ "margin": "5px 5px" });
-        console.log("second", $btn);
-        //adding the class="stars" to the newly dynamically created buttons
-        $btn.addClass('stars');
-        console.log("third", $btn);
-        //adding the data-name attribute to the buttons
-        $btn.attr('data-name', movieStars[i]);
-        console.log("forth", $btn);
-        //gives each button a text lable matching the text of the element in the array
-        $btn.text(movieStars[i]);
-        console.log('fifth', $btn);
-        //locates each button in the div with the id="starButtons"
-        $('#starButtons').prepend($btn);
-        console.log("sixth", $btn);
-    }
-};*/
+
 //using the document on click event listener to display the star bio on the page when a star button is clicked
 $(document).on('click', '.stars', pullBio);
 
-//makeButtons();
 
 //initializing click counter for the starBio buttons, to see if it's a popular feature
 var starClicker = 0;
@@ -407,17 +320,13 @@ database.ref('/starClicks').on('value', snapshot => {
 
 /////////////////////////// end of star biography code///////////////////////////////////////////////////////////////////////////
 
-///used a database function to .push(); the film from each round to the var films var below -- this is the shopping area code////
+///////////////////////////////////////////////////// start of shopping code ////////////////////////////////////////////////////
 
-//creating the var film to hold the film info of items/films pushed from the omdb api
-
-//var films = ["Pulp Fiction", "Clueless", "Fight Club", "The Matrix", "Titanic"];
 //setting the var $dvdBrDiv to hold the dynamically created div with class="disc" and font-size .8rem
 var $dvdBrDiv = $('<div>').addClass("disc").css({ "font-size": "0.9rem" });
-//for loop that instantaneously itterates several ajax requests, one for each index in the array held by the var films
 //for (var j = 0; j < films.length; j++) {
-    //created the var queryURL3 to hold the url for the ajax request which waits for each item in the var films to concatenate by way of the for loop and complete the url and consequently the ajax request 
-    var queryURL3 = "https://api.walmartlabs.com/v1/search?apikey=bazr3m8sdwbcyg57sjkm8ake&categoryId=4096&numItems=1&responseGroup=full&query=" + film;//films[j];
+    //created the var queryURL3 to hold the url for the ajax request which waits for the var film generated by the random selecter to concatenate completing the url and consequently the ajax request 
+    var queryURL3 = "https://api.walmartlabs.com/v1/search?apikey=bazr3m8sdwbcyg57sjkm8ake&categoryId=4096&numItems=1&responseGroup=full&query=" + film;
     //the ajax request with url and method "GET" that is being looped through for each item in the array held by the var films
     $.ajax({
         url: queryURL3,
