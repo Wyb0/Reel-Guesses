@@ -187,36 +187,121 @@ var movies = ["Bill and Ted’s Excellent Adventure",
         ];
 
 //setting the var chosen to grab a randomly selected movie from the array of movies
-var chosen = movies[Math.floor(Math.random() * movies.length)];
-
+var grab = movies[Math.floor(Math.random() * movies.length)];
 //logging chosen to test we're getting proper results
-console.log(chosen);
+console.log(grab);
+//setting the var movieStars to an empty array, which will hold the list of actors from the randomly selected film
+var movieStars = [];
+//function to generate the ajax request and utilize the response from (i.e. pull movies) OMDB API
+function pullMovie() {
+    //setting the var queryURL to hold the query for OMDB's API and the interpolated var grab to dynamically create the full API call 
+    var queryURL = "https://www.omdbapi.com/?t=" + grab + "&y=&plot=short&apikey=be1e25b8";
+    //
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+        //
+    }).done( repo => {
+        console.log(repo);
+        var actors = repo.Actors
+        database.ref('/filmStars').set({
+            stars: actors
+        });
+        /*movieStars.push((repo.Actors.split(',')));
+        console.log(movieStars);
+        function makeButtons() {
+            //deletes the #starButtons div each time a new movieStars array is added, preventing repeat/lingering buttons 
+            $('#starButtons').empty();
+            //for loop that itterates through the entire array, rendering a button for each index of the array
+            for (var i = 0; i < movieStars[0].length; i++) {
+                console.log("first", movieStars[0][i]);
+                //for (var k = 0; k < movieStars[i].length; k++) {
+                //dynamically creating a button through JQuery (with css styling to prevent each button from touching one another)
+                var $btn = $('<button>').css({ "margin": "5px 5px" });
+                console.log("second", $btn);
+                //adding the class="stars" to the newly dynamically created buttons
+                $btn.addClass('stars');
+                console.log("third", $btn);
+                //adding the data-name attribute to the buttons
+                $btn.attr('data-name', movieStars[0][i]);
+                console.log("forth", $btn);
+                //gives each button a text lable matching the text of the element in the array
+                $btn.text(movieStars[0][i]);
+                console.log('fifth', $btn);
+                //locates each button in the div with the id="starButtons"
+                $('#starButtons').prepend($btn);
+                console.log("sixth", $btn);
+                //}
+            }
+        };
+        makeButtons();*/
+    })
+    //makeButtons();
+}
 
-
-
+pullMovie();
 //need a function to extract the list of main acotrs/actresses from each film through the object path of the omdb api and .push();
 //each name to the array held by the var movieStars below
 
-//////////////////////the function would go here -- below is the star biography code area////////////////////////////////////
+////////////////////// below is the star biography code area//////////////////////////////////////////////////////////////////////
 
+database.ref('/filmStars').on('value', function(snap) {
+
+    console.log(snap.val());
+
+    movieStars.push((snap.val().stars.split(',')));
+    
+    console.log(movieStars);
+
+    //function to create movieStar buttons
+    function makeButtons() {
+        //deletes the #starButtons div each time a new movieStars array is added, preventing repeat/lingering buttons 
+        $('#starButtons').empty();
+        //for loop that itterates through the entire array, rendering a button for each index of the array
+        for (var i = 0; i < movieStars[0].length; i++) {
+            console.log("first", movieStars[0][i]);
+            //dynamically creating a button through JQuery (with css styling to prevent each button from touching one another)
+            var $btn = $('<button>').css({ "margin": "5px 5px" });
+            console.log("second", $btn);
+            //adding the class="stars" to the newly dynamically created buttons
+            $btn.addClass('stars');
+            console.log("third", $btn);
+            //adding the data-name attribute to the buttons
+            $btn.attr('data-name', movieStars[0][i]);
+            console.log("forth", $btn);
+            //gives each button a text lable matching the text of the element in the array
+            $btn.text(movieStars[0][i]);
+            console.log('fifth', $btn);
+            //locates each button in the div with the id="starButtons"
+            $('#starButtons').prepend($btn);
+            console.log("sixth", $btn);
+        }
+    };
+
+    makeButtons();
+
+}, errorObject => {
+
+    console.log('The read failed: ' + errorObject.code);
+});
 //setting the var movieStar to hold the array of actor's/actress's names from the film
-var movieStars = ["Hugo Weaving", "Brad Pitt", "Jeremy Rener", "Samuel L. Jackson", "Leonardo Dicaprio"];  //this array is set up as a test 
-//function to generate the ajax request to and utilize the response from (i.e. pull star bio's) Wikipedia's API
+//var movieStars = [theArray.valueOf(actors)];  //this array is set up as a test 
+//function to generate the ajax request and utilize the response from (i.e. pull star bio's) Wikipedia's API
 function pullBio() {
     //creating the var movieStar to hold the name clicked on and subsequently interpolate into the queryURL var, completing the ajax request
     var movieStar = $(this).attr('data-name')
-    //setting the var queryURL to hold the query for Wikipedia's API and the interpolated var movieStar to dynamically create the full API call
+    //setting the var queryURL2 to hold the query for Wikipedia's API and the interpolated var movieStar to dynamically create the full API call
     var queryURL2 = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + movieStar + "&limit=1";
     //creating a jQuery ajax call for the specific actor/actress with the "GET" method
     $.ajax({
         url: queryURL2,
         method: "GET"
         //setting the .done function to receive the response
-    }).done( repo => {
+    }).done( repo2 => {
         //creating a var starDiv to hold the dynamically created html div w/ class="star"
         var starDiv = $('<div class="star">');
         //setting the var starBio to the path for the star's biography, ultimately setting starBio to hold the star's biography
-        var starBio = repo[2][0];
+        var starBio = repo2[2][0];
         //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
         var bioP = $('<p>').text("Star Biography: " + starBio);
         //appending the var bioP to the var starDiv
@@ -226,7 +311,7 @@ function pullBio() {
     });
 };
 //function to create movieStar buttons
-function makeButtons() {
+/*function makeButtons() {
     //deletes the #starButtons div each time a new movieStars array is added, preventing repeat/lingering buttons 
     $('#starButtons').empty();
     //for loop that itterates through the entire array, rendering a button for each index of the array
@@ -248,11 +333,11 @@ function makeButtons() {
         $('#starButtons').prepend($btn);
         console.log("sixth", $btn);
     }
-};
+};*/
 //using the document on click event listener to display the star bio on the page when a star button is clicked
 $(document).on('click', '.stars', pullBio);
 
-makeButtons();
+//makeButtons();
 
 //initializing click counter for the starBio buttons, to see if it's a popular feature
 var starClicker = 0;
@@ -315,28 +400,28 @@ for (var j = 0; j < films.length; j++) {
         url: queryURL3,
         method: "GET"
         //the .done function that is being looped through for each array intem held by the var films
-    }).done( repo => {
-        console.log(repo);
+    }).done( repo3 => {
+        console.log(repo3);
         //setting the var caseArt to hold the path to each dvd/blue-ray image
-        var caseArt = repo.items[0].imageEntities[1].thumbnailImage;
+        var caseArt = repo3.items[0].imageEntities[1].thumbnailImage;
         //setting the var $caseImage to hold the dynamically created html image element with the src attribute set to the var caseArt
         var $caseImage = $('<br><img>').attr("src", caseArt);
         //appending the var $caseImage to the var $dvdBrDiv which holds the dynamically created div, ultimately putting a dynamically created html image into a dynamically created html div
         $dvdBrDiv.append($caseImage);
         //setting the var name to hold the path to each dvd/blue-ray title
-        var name = repo.items[0].name;
+        var name = repo3.items[0].name;
         //creating the var $title to hold a dynamically created html paragraph element with text of each dvd/blue-ray title
         var $title = $('<p>').text(name);
         //appending the var $title to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html paragraph into a dynamically created html div
         $dvdBrDiv.append($title);
         //setting the var cost to hold the path to each dvd/blue-ray price
-        var cost = repo.items[0].salePrice;
+        var cost = repo3.items[0].salePrice;
         //created the var $price to hold a dynamically created html paragraph element with text of each dvd/blue-ray price
         var $price = $('<p>').text("Walmart price $" + cost);
         //appending the var $price to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html element into another dynamically created html div element
         $dvdBrDiv.append($price);
         //setting the var addtoCart to hold the path to the walmart shopping cart checkout/purchase screen for each dvd/blue-ray 
-        var addtoCart = repo.items[0].addToCartUrl;
+        var addtoCart = repo3.items[0].addToCartUrl;
         //created the var $cart to hold a dynamically created html anchor element with the href attribute hyper linking the dvd/blue-ray, the app, and walmart's shopping cart checkout/purchase screen
         var $cart = $('<a>').attr("href", addtoCart).attr("target", "_blank").text("Add To Cart");
         //appending the var $cart with the dynamically created html anchor element to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html anchor element into a dynamically created html div element
