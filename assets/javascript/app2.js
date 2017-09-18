@@ -166,12 +166,12 @@ function pullFilm() {
     //setting the var queryURL to hold the query for OMDB's API and the interpolated var film to dynamically create the full API call 
     var queryURL = "https://www.omdbapi.com/?t=" + film + "&y=&plot=short&apikey=be1e25b8";
 
-    //
+    //the ajax request with url and "GET" method that is calling the OMDB api for the randomly selected film's DVD/BR to purchase
     $.ajax({
         url: queryURL,
         method: "GET"
 
-        //
+        //setting the .done function to receive the repo
     }).done( repo => {
         console.log(repo);
 
@@ -248,7 +248,6 @@ database.ref('/filmStars').on('value', snap => {
 
     //used the database node /filmStars to save the list of main actors from each film through the object path of the omdb api above and .push(); each name to the object held by the var movieStars below
     movieStars.push((snap.val().stars.split(',')));
-    
     console.log(movieStars);
 
     //function to create movieStar buttons
