@@ -246,7 +246,13 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
     
             //appending the plot var (i.e. paragraph element containing the plot) to the filmDiv
             filmDiv.append(plot);
-    
+            
+            var rotTom = repo.Ratings[1].Value
+            
+            var criticRate = $('<p>').html('Critic Rating: ' + rotTom);
+            
+            filmDiv.append(criticRate);
+
             //appending the dynamic div - filmDiv - to the hard coded html div with id film-view and thus displaying the rating, poster, release date, actors, and synopsis
             $('#film-view').prepend(filmDiv);
         })

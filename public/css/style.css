@@ -18,7 +18,7 @@ body {
     text-align: center;               
     border: 1px solid black;
     margin-top: 4px; 
-    background: url("background.jpg");    
+    /* background: url("images/movie.png");     */
 }
 
 h1 {
