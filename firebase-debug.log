@@ -1,0 +1,26 @@
+[debug] [2017-09-18T03:50:20.149Z] ----------------------------------------------------------------------
+[debug] [2017-09-18T03:50:20.151Z] Command:       /usr/local/bin/node /usr/local/bin/firebase use --add
+[debug] [2017-09-18T03:50:20.152Z] CLI Version:   3.11.0
+[debug] [2017-09-18T03:50:20.152Z] Platform:      darwin
+[debug] [2017-09-18T03:50:20.152Z] Node Version:  v6.11.3
+[debug] [2017-09-18T03:50:20.153Z] Time:          Sun Sep 17 2017 23:50:20 GMT-0400 (EDT)
+[debug] [2017-09-18T03:50:20.153Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-18T03:50:20.164Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] [2017-09-18T03:50:20.164Z] > authorizing via signed-in user
+[debug] [2017-09-18T03:50:20.167Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects  
+ Sun Sep 17 2017 23:50:20 GMT-0400 (EDT)
+[debug] [2017-09-18T03:50:23.775Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-18T04:10:07.852Z] ----------------------------------------------------------------------
+[debug] [2017-09-18T04:10:07.855Z] Command:       /usr/local/bin/node /usr/local/bin/firebase use --add
+[debug] [2017-09-18T04:10:07.855Z] CLI Version:   3.11.0
+[debug] [2017-09-18T04:10:07.855Z] Platform:      darwin
+[debug] [2017-09-18T04:10:07.855Z] Node Version:  v6.11.3
+[debug] [2017-09-18T04:10:07.856Z] Time:          Mon Sep 18 2017 00:10:07 GMT-0400 (EDT)
+[debug] [2017-09-18T04:10:07.856Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-18T04:10:07.867Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] [2017-09-18T04:10:07.868Z] > authorizing via signed-in user
+[debug] [2017-09-18T04:10:07.870Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects  
+ Mon Sep 18 2017 00:10:07 GMT-0400 (EDT)
+[debug] [2017-09-18T04:10:09.064Z] <<< HTTP RESPONSE 200
