@@ -209,6 +209,23 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             //appending the rated var to the dynamic div with class .films
             filmDiv.append(rated);
     
+////
+ //creating the var rated to hold a dynamic paragraph which contains the ratings 
+            var question = $('<p>').html('What is the score of ' + title)
+                .attr("id", "score");
+         //appending the rated var to the dynamic div with class .films
+         filmDiv.append(question);
+
+        var answer = $('<form>');
+        var input = $("<input>").attr("type", "text");
+        answer.append(input);
+        var input2 = $("<button>").attr("type", "submit").text('submit');
+        answer.append(input2);
+        question.append(answer);
+        event.preventDefault();
+////
+
+
             //grabing the url for the poster & sticking it in the var poster
             var poster = repo.Poster;
     
@@ -252,6 +269,10 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             filmDiv.append(plot);
             
             var rotTom = repo.Ratings[1].Value
+
+            database.ref('/criticRanking').set({
+                rotScore: rotTom
+            });
             
             var criticRate = $('<p>').html('Critic Rating: ' + rotTom);
             
