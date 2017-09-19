@@ -196,6 +196,9 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
     
             //creating the var filmDiv to hold a dynamic div with class .films which in turn holds the randomly selected film
             var filmDiv = $('<div>').addClass('films');
+
+            //creating var for title of movie
+            var title = repo.Title
     
             //grabbing the ratings from the repo object path with the var rating
             var rating = repo.Rated;
@@ -216,10 +219,11 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             filmDiv.append(image);
     
             //grabbing the release date and storing it in the var released
-            var released = repo.Released;
+            //var released = repo.Released; *edited out for year only
+            var released = repo.Year
     
             //dynamically creating a paragraph element to hold the release date and sticking it in the var release
-            var release = $('<p>').html('Release Date: ' + released + '.');
+            var release = $('<p>').html(title + ' ' + '(' + released + ')');
     
             //appending the var release (i.e. the html element) to the filmDiv
             filmDiv.append(release);
@@ -302,7 +306,7 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
                 console.log('fifth', $btn);
     
                 //locates each button in the div with the id="starButtons"
-                $('#starButtons').prepend($btn);
+                $('#starButtons').append($btn);
                 console.log("sixth", $btn);
             }
         };
