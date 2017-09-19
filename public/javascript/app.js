@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    
+////
+ //creating the var rated to hold a dynamic paragraph which contains the ratings 
+ var question = $('<p>').html('What is the score of' + title)
+ .attr("id", "score");
+//appending the rated var to the dynamic div with class .films
+filmDiv.append(question);
+////
 
     var movies = ["Bill and Ted’s Excellent Adventure",
         "White Chicks",

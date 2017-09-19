@@ -3,22 +3,22 @@ html, body {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
 }
 
 .container {                           
-    width: 1200px;
+    /* width: 1200px; */
     padding: 50px;
     box-sizing: border-box;
-    box-shadow: 0 10px 10px 10px #000; 
+    /* box-shadow: 0 10px 10px 10px #000; 
     -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
+    -moz-border-radius: 5px; */
     border-radius: 5px;
     text-align: center;               
     border: 1px solid black;
     margin-top: 4px; 
-    /* background: url("images/movie.png");     */
+  
 }
 
 h1 {
@@ -33,7 +33,8 @@ h1 {
 #film-view {
 
     background-color: rgba(110, 101, 101, 0.4);
-    
+    margin: auto;
+    text-align: left;
 }
 
 #playerPop {
@@ -46,4 +47,8 @@ color: blue;
     text-align: center;
     
 
+}
+
+#score {
+    float: right;
 }
