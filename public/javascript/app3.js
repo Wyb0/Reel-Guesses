@@ -337,7 +337,10 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
     
             //setting the .done function to receive the response
         }).done( repo2 => {
-    
+            
+            //added empty to clear button event after click
+            $(".star").empty();
+
             //creating a var starDiv to hold the dynamically created html div w/ class="star"
             var starDiv = $('<div class="star">');
     
@@ -345,7 +348,7 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             var starBio = repo2[2][0];
     
             //creating the var bioP to hold a dynamically created html paragraph element chained with the .text(); function to add the label Star Biography as well as the concatenated var starBio (and it's value - the star's biography)
-            var bioP = $('<p>').text("Star Biography: " + starBio);
+            var bioP = $('<p>').text("Bio: " + starBio);
     
             //appending the var bioP to the var starDiv
             starDiv.append(bioP);
