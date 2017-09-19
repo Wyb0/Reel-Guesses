@@ -252,6 +252,10 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             filmDiv.append(plot);
             
             var rotTom = repo.Ratings[1].Value
+
+            database.ref('/criticRanking').set({
+                rotScore: rotTom
+            });
             
             var criticRate = $('<p>').html('Critic Rating: ' + rotTom);
             
