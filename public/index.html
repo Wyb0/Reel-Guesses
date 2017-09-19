@@ -10,16 +10,16 @@
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
     <title>Movie Game</title>
 </head>
-<body>
+<body>  
 
-  
-  <div class="container">
-        <!-- video player -->
- 
-
-<img src="images/movie.png" class="img-fluid" alt="Ticket Stub" style="width: 1090px;height:400px";>
-
+  <!-- Added new ID's -->
+    
+  <div class="container"> 
+      <img src="images/movie.png" class="img-fluid" alt="Ticket Stub" style="width:1098px;height:400px";>
+      
+      <section class="container" id=main>
     <div class="jumbotron">
+      
       <h1 class="display-5">INSTRUCTIONS</h1>
       <p class="lead">orem Ipsum is simply dummy text of the printing and typesetting
       industry. Lorem Ipsum has been the industry's standard
@@ -31,16 +31,18 @@
       <hr class="my-4">
       <p>CLICK HERE TO BEGIN YOUR MOVIE JOURNEY</p>
       <p class="lead">
+        </p>
+        <div id="button">
         <a class="btn btn-dark btn-lg" href="#" role="button">PLAY</a>
-      </p>
+        </div>
     
-
+       </section>
      
-      <section class="container">
+      <section class="container" id="page1">
           <div class="row">
             <div class="col-lg-8 text-center" id="youtube">
   
-              <iframe id="video" width="420" height="315" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/gKR7O5B9qqg" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="col-lg-4">
             </div>
@@ -49,8 +51,8 @@
     
     
       <br><br><br><br>
-    <section class="container">
-      <div class="row">
+    <section class="container" id="page2">
+        <div class="row">
         <div class="col-lg-1 text-left" id="playerPop">
           
         </div>
@@ -66,13 +68,15 @@
 
   
 
-    <section class="container">
-      <div class="row">
+    <section class="container" id="page3">
+       
+        <div class="row">
         <div class="col-lg-8 text-center" id="film-view">
         </div>
-        <div class="col-lg-4">
-        </div>
+        <div class="col-lg-4" id="form">
+         </div>
       </div>
+      
     </section>
   </div>
 
@@ -92,8 +96,9 @@
 
 
     <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
-    <!-- <script src="javascript/app.js"></script> -->
-    <!-- <script src="javascript/app2.js"></script> -->
+    <script src="javascript/app.js"></script>
+    <script src="javascript/app2.js"></script>
     <script src="javascript/app3.js"></script>
+    <script src="javascript/app4.js"></script>
 </body>
 </html>
