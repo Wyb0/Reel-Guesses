@@ -157,24 +157,27 @@ jQuery(($) => {
     //logging film to test we're getting proper results
     console.log(film);
     
-
-// taking chosen movie and adding "trailer" to search result
-var title = film + "trailer"
-//url pulling from googles API search list - adding title - adding API key
-
-var queryURL = "https://cors-bcs.herokuapp.com/https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=" + title + "&key=AIzaSyAVmdAqqHKsMcIgJ01XXz3NrNnBqEP2Jjs"
-
-// Ajax request to pull youtube video
+    // taking chosen movie and adding "trailer" to search result
+    var title = film + "trailer"
+    
+    //url pulling from googles API search list - adding title - adding API key
+    var queryURL = "https://cors-bcs.herokuapp.com/https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=" + title + "&key=AIzaSyAVmdAqqHKsMcIgJ01XXz3NrNnBqEP2Jjs"
+    
+    // Ajax request to pull youtube video
         $.ajax({
           url: queryURL,
           method: "GET"
-        }).done(function(response) {
- console.log(response);            
-console.log(response.items[0].id.videoId);
-//replacing video src with trailers video ID
-$("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id.videoId))
+    
+    // Tells computer what to do with AJAX request      
+            }).done(function(response) {
 
-});
+                console.log(response);   
+                
+                console.log(response.items[0].id.videoId);
+    
+    //replacing video src with trailers video ID
+    $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id.videoId))
+    });
 
     //setting the var movieStars to an empty array, which will hold the list of actors from the randomly selected film
     var movieStars = [];
@@ -258,31 +261,49 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             //appending the plot var (i.e. paragraph element containing the plot) to the filmDiv
             //filmDiv.append(plot);
             
+            // creating variable for answer to question (Rotten tomatos score)
             var rotTom = repo.Ratings[1].Value
 
+            // creating var for form
             var answer = $('<form>');
+
+            // creating input for user guess
             var input = $("<input id='stephens'>").attr("type", "number");
+            // append answer
             answer.append(input);
+
+            // creating submit button
             var input2 = $("<button id='tyler'>").attr("type", "submit").text('submit');
+            //appending button
             answer.append(input2);
+            //appending answer
             question.append(answer);
             
+            //logging answer as reference
             console.log(rotTom);
+
+            // creating on click function for answer
             $(document).on("click", '#tyler', () => {
+                // prevent default function
                 event.preventDefault();
-                // alert("button works");
+                // console logging users input
                 console.log(input["0"].value);
-                // console.log(input);
+                // if statement comparing users input to answer(rotTom)
                 if (input["0"].value + "%" == rotTom) {
                     alert("Winner");
-            
+                // hiding question page and showing API page
                     $("#page1").show();
                     $("#page3").hide();
-                    
-                
-                   
+                     
+                  } else {
+                    alert("You fucked up");
+                    // hiding question page and showing API page
+                        $("#page1").show();
+                        $("#page3").hide();
+                         
                   }
             });
+            // end of on click function
 
             database.ref('/criticRanking').set({
                 rotScore: rotTom
