@@ -222,13 +222,13 @@ var youtubeClick = 0;
             var title = repo.Title
     
             //grabbing the ratings from the repo object path with the var rating
-            var rating = repo.Rated;
+            //var rating = repo.Rated;
     
             //creating the var rated to hold a dynamic paragraph which contains the ratings 
-            var rated = $('<p>').html('Rated: ' + rating);
+            //var rated = $('<p>').html('Rated: ' + rating);
     
             //appending the rated var to the dynamic div with class .films
-            filmDiv.append(rated);
+            //filmDiv.append(rated);
     
 ////
  //creating the var rated to hold a dynamic paragraph which contains the ratings 
@@ -275,19 +275,19 @@ var youtubeClick = 0;
             });
     
             //dynamically creating a paragraph element to hold the list of actors and wrapping it with the var players
-            var players = $('<p>').html('Starring: ' + actors);
+            //var players = $('<p>').html('Starring: ' + actors);
     
             //appending the var players (i.e. html element) to the filmDiv
-            filmDiv.append(players);
+            //filmDiv.append(players);
     
             //grabbing the plot synopsis and storing it in the var story
-            var story = repo.Plot;
+            //var story = repo.Plot;
     
             //dynamically creating a paragraph element to hold the var story and sticking it into the var plot
-            var plot = $('<p>').html('Synopsis: ' + story);
+            //var plot = $('<p>').html('Synopsis: ' + story);
     
             //appending the plot var (i.e. paragraph element containing the plot) to the filmDiv
-            filmDiv.append(plot);
+            //filmDiv.append(plot);
             
             var rotTom = repo.Ratings[1].Value
 
