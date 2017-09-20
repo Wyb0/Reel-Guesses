@@ -527,7 +527,7 @@ jQuery(($) => {
             location.reload();
             pullFilm()
             $("#page3").show();
-            $("#main").hide();
+          
             
         });
 
