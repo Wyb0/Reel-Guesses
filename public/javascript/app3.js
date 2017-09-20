@@ -209,22 +209,12 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             //appending the rated var to the dynamic div with class .films
             //filmDiv.append(rated);
     
-////
- //creating the var rated to hold a dynamic paragraph which contains the ratings 
-            var question = $('<p>').html('What is the score of ' + title)
-                .attr("id", "score");
-         //appending the rated var to the dynamic div with class .films
-         filmDiv.append(question);
+            //creating the var rated to hold the main question
+            var question = $('<p>').html('What is the score of ' + title + '?')
+            .attr("id", "score");
 
-        var answer = $('<form>');
-        var input = $("<input>").attr("type", "text");
-        answer.append(input);
-        var input2 = $("<button>").attr("type", "submit").text('submit');
-        answer.append(input2);
-        question.append(answer);
-        event.preventDefault();
-////
-
+            //appending the question var 
+            filmDiv.append(question);
 
             //grabing the url for the poster & sticking it in the var poster
             var poster = repo.Poster;
@@ -269,6 +259,30 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
             //filmDiv.append(plot);
             
             var rotTom = repo.Ratings[1].Value
+
+            var answer = $('<form>');
+            var input = $("<input id='stephens'>").attr("type", "number");
+            answer.append(input);
+            var input2 = $("<button id='tyler'>").attr("type", "submit").text('submit');
+            answer.append(input2);
+            question.append(answer);
+            
+            console.log(rotTom);
+            $(document).on("click", '#tyler', () => {
+                event.preventDefault();
+                // alert("button works");
+                console.log(input["0"].value);
+                // console.log(input);
+                if (input["0"].value + "%" == rotTom) {
+                    alert("Winner");
+            
+                    $("#page1").show();
+                    $("#page3").hide();
+                    
+                
+                   
+                  }
+            });
 
             database.ref('/criticRanking').set({
                 rotScore: rotTom
