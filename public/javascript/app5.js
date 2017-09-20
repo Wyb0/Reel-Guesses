@@ -8,4 +8,8 @@ $(document).ready(function(){
     var rottenScore = snap.val().rotScore
         console.log(rottenScore)
     })
+    
+    errorObject => { 
+
+    };
 });
