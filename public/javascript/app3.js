@@ -176,6 +176,27 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
 
 });
 
+//making var for youtube click counter
+var youtubeClick = 0;
+
+  $(document).on("click", "#video", () => {
+
+      //increases click counter
+      youtubeClick++;
+                
+      //saving the value of youtubeClick in firebase
+      database.ref("/trailerClicks").set({
+          youtubeClicked: youtubeClick
+      })
+  });
+   
+  //database ref to save on click snapshot to incremently add updated click count w/o erasing
+  database.ref('/trailerClicks').on('value', function(snap) {
+      console.log(snap.val());
+
+      youtubeClick = snap.val().youtubeClicked;
+  });
+
     //setting the var movieStars to an empty array, which will hold the list of actors from the randomly selected film
     var movieStars = [];
     
