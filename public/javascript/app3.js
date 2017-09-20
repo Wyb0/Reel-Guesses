@@ -184,6 +184,8 @@ jQuery(($) => {
     
     //function to generate the ajax request and utilize the response (i.e. pull movies) pull the film OMDB API
     function pullFilm() {
+
+        $("#page1").hide();
     
         //setting the var queryURL to hold the query for OMDB's API and the interpolated var film to dynamically create the full API call 
         var queryURL = "https://www.omdbapi.com/?t=" + film + "&y=&plot=short&apikey=be1e25b8";
@@ -285,7 +287,7 @@ jQuery(($) => {
             // creating on click function for answer
             $(document).on("click", '#tyler', () => {
                 // prevent default function
-                //event.preventDefault();
+                event.preventDefault();
                 // console logging users input
                 console.log(input["0"].value);
                 // if statement comparing users input to answer(rotTom)
