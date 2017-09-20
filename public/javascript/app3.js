@@ -285,18 +285,16 @@ jQuery(($) => {
             // creating on click function for answer
             $(document).on("click", '#tyler', () => {
                 // prevent default function
-                event.preventDefault();
+                //event.preventDefault();
                 // console logging users input
                 console.log(input["0"].value);
                 // if statement comparing users input to answer(rotTom)
                 if (input["0"].value + "%" == rotTom) {
-                    alert("Winner");
                 // hiding question page and showing API page
                     $("#page1").show();
                     $("#page3").hide();
                      
                   } else {
-                    alert("You fucked up");
                     // hiding question page and showing API page
                         $("#page1").show();
                         $("#page3").hide();
@@ -517,6 +515,23 @@ jQuery(($) => {
             $('#filmCase').prepend($dvdBrDiv);
         });
 
+        var nextGuess = $('<button id="nextGuess">').attr("type", "submit").text('Next Guess').css({"margin": "10px  5px 10px 10px"});
+
+        $('#filmCase').append(nextGuess);
+
+        $(document).on('click', '#nextGuess', () => {
+
+            //refresh page
+            //hide the 'play'
+
+            location.reload();
+            pullFilm()
+            $("#page3").show();
+            $("#main").hide();
+            
+        });
+
+        
       //making var for shopping click counter
       var shoppingClick = 0;
       
