@@ -495,6 +495,10 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
                 shoppingClicked: shoppingClick
             })
         });
+
+        errorObject => { 
+
+        };
          
         //database ref to save on click snapshot to incremently add updated click count w/o erasing
         database.ref('/shoppingClicks').on('value', function(snap) {
