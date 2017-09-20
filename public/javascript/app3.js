@@ -474,29 +474,33 @@ $("#video").attr("src", ("https://www.youtube.com/embed/" + response.items[0].id
     
             //created the var $cart to hold a dynamically created html anchor element with the href attribute hyper linking the dvd/blue-ray, the app, and walmart's shopping cart checkout/purchase screen
             var $cart = $('<a>').attr("href", addtoCart).attr("target", "_blank").text("Add To Cart");
-
-            //making var for shopping click counter
-            var shoppingClick = 0;
-
-            $(document).on("click", "#filmCase", () => {
-
-                //increases click counter
-                shoppingClick++;
-                
-                //saving the value of shoppingClick in firebase
-                database.ref("/shoppingClicks").set({
-                    shoppingClicked: shoppingClick
-                })
-            });
-                
-            //on click event for shopping to register value of click
-            $(document).on("click")
     
             //appending the var $cart with the dynamically created html anchor element to the var $dvdBrDiv which holds the dynamic div, again putting a dynamically created html anchor element into a dynamically created html div element
             $dvdBrDiv.append($cart);
     
             //prepending the var $dvdBrDiv to the div with the id="filmCase"
             $('#filmCase').prepend($dvdBrDiv);
+        });
+
+      //making var for shopping click counter
+      var shoppingClick = 0;
+      
+        $(document).on("click", "#filmCase", () => {
+      
+            //increases click counter
+            shoppingClick++;
+                      
+            //saving the value of shoppingClick in firebase
+            database.ref("/shoppingClicks").set({
+                shoppingClicked: shoppingClick
+            })
+        });
+         
+        //database ref to save on click snapshot to incremently add updated click count w/o erasing
+        database.ref('/shoppingClicks').on('value', function(snap) {
+            console.log(snap.val());
+
+        shoppingClick = snap.val().shoppingClicked;
         });
     //};
     });
