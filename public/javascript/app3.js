@@ -41,7 +41,7 @@ jQuery(($) => {
     connectionsRef.on('value', snap => {
     
         //display the data snap in the app html -- numChildren is the number of players in /connections
-        $('#playerPop').html(snap.numChildren());
+        $('#playerPop').html("Players Currently Online: " + snap.numChildren());
     });
     
     //////////////////////////////////// end of initial database code ////////////////////////////////////////////////////////////////////////
@@ -276,7 +276,7 @@ jQuery(($) => {
             answer.append(input);
 
             // creating submit button
-            var input2 = $("<button id='tyler'>").attr("type", "submit").text('submit');
+            var input2 = $("<button id='tyler'>").attr("type", "submit",).text('Submit Score!');
             //appending button
             answer.append(input2);
             //appending answer
@@ -316,7 +316,7 @@ jQuery(($) => {
             
             var criticRate = $('<p>').html('Critic Rating: ' + rotTom);
             
-            filmDiv.append(criticRate);
+            //filmDiv.append(criticRate);
 
             //appending the dynamic div - filmDiv - to the hard coded html div with id film-view and thus displaying the rating, poster, release date, actors, and synopsis
             $('#film-view').prepend(filmDiv);
