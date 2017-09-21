@@ -594,10 +594,6 @@ jQuery(($) => {
                 shoppingClicked: shoppingClick
             })
         });
-
-        errorObject => { 
-
-        };
          
         //database ref to save on click snapshot to incremently add updated click count w/o erasing
         database.ref('/shoppingClicks').on('value', function(snap) {
@@ -605,6 +601,11 @@ jQuery(($) => {
 
         shoppingClick = snap.val().shoppingClicked;
         });
+
+        errorObject => { 
+            console.log('The read failed: ' + errorObject.code);
+
+        };
     //};
     });
     /////////////////////////// end of shopping code area//////////////////////////////////////////////////////////////////////////////
