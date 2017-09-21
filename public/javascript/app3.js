@@ -409,7 +409,7 @@ jQuery(($) => {
                 console.log('fifth', $btn);
     
                 //locates each button in the div with the id="starButtons"
-                $('#starButtons').append($btn);
+                $('#youtube').append($btn);
                 console.log("sixth", $btn);
             }
         };
@@ -457,7 +457,7 @@ jQuery(($) => {
             starDiv.append(bioP);
     
             //append the var starDiv to the html div element with the id="movieStar"
-            $('#starButtons').append(starDiv);
+            $('#youtube').append(starDiv);
         });
     };
     
@@ -600,11 +600,9 @@ jQuery(($) => {
             console.log(snap.val());
 
         shoppingClick = snap.val().shoppingClicked;
-        });
+        }); errorObject => { 
 
-        errorObject => { 
             console.log('The read failed: ' + errorObject.code);
-
         };
     //};
     });
