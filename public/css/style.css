@@ -1,3 +1,26 @@
+#score {
+font-size: 18px;
+color: maroon;
+text-transform: uppercase;
+}
+
+#tyler {
+
+ font-size: 14px;  
+}
+
+p {
+
+    font-size: 14px;
+    color: blue;
+}
+
+.img-fluid {
+
+    margin: auto;
+}
+
+
 /*html, body {
     height: 100%;
 }
